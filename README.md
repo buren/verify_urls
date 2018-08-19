@@ -31,42 +31,6 @@ Usage: verify_urls --help
     -h, --help                       How to use
 ```
 
-__Ruby__
-
-Verify all URLs in `README.md`
-
-```ruby
-reader = VerifyUrls::Reader.new('README.md')
-reader.urls.each do |url|
-  response = VerifyUrls::Helper.GET(url)
-  puts "Failed: #{url}" if response&.code != 200
-end
-```
-
-Get all URLs in `README.md`:
-
-```ruby
-require 'verify_urls'
-
-reader = VerifyUrls::Reader.new('README.md')
-reader.urls # => ["https://rubygems.org", "https://opensource.org/licenses/MIT"]
-
-# we will try to infer the file format from the file extension
-# you can explicitly provide it
-reader = VerifyUrls::Reader.new('README', 'markdown')
-reader.urls # => ["https://rubygems.org", "https://opensource.org/licenses/MIT"]
-```
-
-HTML and CSV is also supported
-
-```ruby
-reader = VerifyUrls::Reader.new('index.html') # get all anchor hrefs
-reader.urls # => ["https://example.com"]
-
-reader = VerifyUrls::Reader.new('output.csv') # assumes no header and URL to be in the first column
-reader.urls # => ["https://example.com"]
-```
-
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

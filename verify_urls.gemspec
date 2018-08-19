@@ -25,9 +25,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'http', '~> 3.3'
-  # TODO: Consider making kramdown & nokogiri optional
-  spec.add_dependency 'kramdown', '~> 1.17'
-  spec.add_dependency 'nokogiri', '~> 1.8'
+  spec.add_dependency 'url_finder', '~> 0.1'
 
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'byebug'

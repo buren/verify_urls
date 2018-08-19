@@ -12,7 +12,7 @@ file_path = options.fetch(:file) { raise(ArgumentError, '--file is required') }
 file_format = options[:format]
 
 helper = VerifyUrls::Helper
-reader = VerifyUrls::Reader.new(file_path, file_format)
+reader = UrlFinder.from_file(file_path, file_format)
 urls = reader.urls
 
 failed_urls = []
