@@ -1,8 +1,6 @@
 # VerifyUrls
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/verify_urls`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Verify URL(s) with ease - CLI and Ruby.
 
 ## Installation
 
@@ -22,7 +20,52 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+__Command Line Interface (CLI)__
+
+```
+Usage: verify_urls --help
+        --file=README.md             The file that contains the URLs to verify.
+        --format=markdown            The file format (optional) - one of markdown, html, csv (if none given we'll try to infer it from the file path).
+        --output=output.csv          CSV Output path
+        --[no-]error-failed          Exit with non-zero status if any URL(s) failed.
+    -h, --help                       How to use
+```
+
+__Ruby__
+
+Verify all URLs in `README.md`
+
+```ruby
+reader = VerifyUrls::Reader.new('README.md')
+reader.urls.each do |url|
+  response = VerifyUrls::Helper.GET(url)
+  puts "Failed: #{url}" if response&.code != 200
+end
+```
+
+Get all URLs in `README.md`:
+
+```ruby
+require 'verify_urls'
+
+reader = VerifyUrls::Reader.new('README.md')
+reader.urls # => ["https://rubygems.org", "https://opensource.org/licenses/MIT"]
+
+# we will try to infer the file format from the file extension
+# you can explicitly provide it
+reader = VerifyUrls::Reader.new('README', 'markdown')
+reader.urls # => ["https://rubygems.org", "https://opensource.org/licenses/MIT"]
+```
+
+HTML and CSV is also supported
+
+```ruby
+reader = VerifyUrls::Reader.new('index.html') # get all anchor hrefs
+reader.urls # => ["https://example.com"]
+
+reader = VerifyUrls::Reader.new('output.csv') # assumes no header and URL to be in the first column
+reader.urls # => ["https://example.com"]
+```
 
 ## Development
 
