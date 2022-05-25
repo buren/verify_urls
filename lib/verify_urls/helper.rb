@@ -11,7 +11,7 @@ module VerifyUrls
     end
 
     def self.GET(url)
-        HTTP.follow.get(url)
+      HTTP.follow.get(url)
     rescue HTTP::Error => _e
     end
 
